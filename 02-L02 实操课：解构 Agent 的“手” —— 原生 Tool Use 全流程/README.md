@@ -1,5 +1,7 @@
 # 🎓 L02 实操课：解构 Agent 的“手” —— 原生 Tool Use 全流程
 
+https://github.com/user-attachments/assets/8fe83a64-9ae5-4a0a-9e31-45a6ded4b5fe
+
 本课程严格遵循“去框架化”理念，使用 Node.js 原生代码，通过**三个循序渐进的场景**（感知 -> 计算 -> 触达），解构 Agent 的工作原理。
 
 **⏱️ 预计时长：** 45 分钟
