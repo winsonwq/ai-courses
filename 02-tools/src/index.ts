@@ -118,8 +118,11 @@ async function callLLM(
 }
 
 async function postFeishu(content: string): Promise<void> {
-  const webhook =
-    'https://open.feishu.cn/open-apis/bot/v2/hook/615e1488-64f6-4e7c-aa64-124c50e90c0d'
+  const webhook = process.env.FEISHU_WEBHOOK || ''
+  if (!webhook) {
+    console.log(`[Simulated Feishu Post]: ${content}`)
+    return
+  }
   
   const fixedTitle = 'AI助手消息'
   
@@ -185,7 +188,11 @@ async function getWeather(city: string): Promise<string> {
 }
 
 async function main() {
-  const apiKey = 'sk-7ce590d85f9d43a9962786bf5bc455c0'
+  const apiKey = process.env.DEEPSEEK_API_KEY || ''
+  if (!apiKey) {
+    console.error('错误: 请先设置环境变量 DEEPSEEK_API_KEY')
+    process.exit(1)
+  }
 
   const messages: Message[] = [
     {
