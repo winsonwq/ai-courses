@@ -67,6 +67,32 @@
 - **Markdown**: 更适合人类阅读，格式灵活，适合文档类提示词
 - **XML**: 更适合机器解析，结构严格，适合结构化数据提取
 
+#### 6b. XML 标签隔离与 Few-shot 学习
+
+**XML 标签隔离的优势**：
+- **清晰的结构**：每个部分都有明确的标签，易于理解和维护
+- **易于解析**：可以用 XML 解析器自动提取各部分内容
+- **防止混淆**：标签明确分隔指令、示例、输入，避免模型混淆
+- **可扩展性**：可以轻松添加新的部分（如 `<constraints>`、`<notes>` 等）
+
+**Few-shot 学习的优势**：
+- **格式一致性**：通过示例明确展示期望的输出格式
+- **提高准确率**：模型通过示例学习如何处理类似情况
+- **覆盖边界情况**：可以展示不同情况的处理方式
+- **减少错误**：示例越多，模型理解越准确
+
+**最佳实践**：
+- 使用 XML 标签隔离不同的指令部分（`<task>`、`<instructions>`、`<output_format>`、`<examples>`、`<user_input>`）
+- 提供 2-5 个 Few-shot 示例，覆盖主要情况
+- 示例应该清晰、准确、多样化
+- 结合使用 `response_format`（如 JSON mode）获得更好的格式保证
+- 降低 temperature（0.2-0.3）以获得更确定性的输出
+
+**运行示例**：
+```bash
+npm run example:xml-fewshot
+```
+
 ### 第三部分：输出控制
 
 #### 7. 控制 JSON 输出内容
@@ -127,6 +153,9 @@ npm run example:xml
 npm run example:json-control
 npm run example:json-comparison  # JSON Mode 参数 vs 提示词要求 JSON 的对比
 npm run example:json-requirement  # response_format 与提示词的关系
+
+# XML 标签隔离与 Few-shot
+npm run example:xml-fewshot  # XML 标签隔离与 Few-shot 学习演示
 ```
 
 ### 使用 ts-node 直接运行
@@ -141,6 +170,7 @@ ts-node src/examples/06-xml-prompt.ts
 ts-node src/examples/07-json-output-control.ts
 ts-node src/examples/08-json-mode-comparison.ts
 ts-node src/examples/09-json-format-requirement.ts
+ts-node src/examples/10-xml-isolation-fewshot.ts
 ```
 
 ## 项目结构
@@ -157,7 +187,8 @@ ts-node src/examples/09-json-format-requirement.ts
 │   │   ├── 06-xml-prompt.ts            # XML 标签格式提示词
 │   │   ├── 07-json-output-control.ts   # 控制 JSON 输出内容
 │   │   ├── 08-json-mode-comparison.ts  # JSON Mode 参数 vs 提示词要求 JSON 的对比
-│   │   └── 09-json-format-requirement.ts  # response_format 与提示词的关系
+│   │   ├── 09-json-format-requirement.ts  # response_format 与提示词的关系
+│   │   └── 10-xml-isolation-fewshot.ts  # XML 标签隔离与 Few-shot 学习演示
 │   └── index.ts                        # 主入口文件
 ├── package.json
 ├── tsconfig.json
@@ -323,13 +354,254 @@ npm run example:json-requirement
   - 需要确定性输出时使用 0.2-0.3
   - 需要创造性输出时使用 0.7-0.9
 
+## 什么时候推荐使用什么模式？
+
+### 输出模式选择指南
+
+根据不同的需求和场景，选择合适的输出模式：
+
+#### 1. 简单对话场景
+
+**推荐模式**：普通模式（无特殊参数）
+
+**特点**：
+- `stream: false`
+- `response_format: 无`
+- `temperature: 0.7`
+
+**适用场景**：
+- 日常问答
+- 简单对话
+- 创意写作
+- 不需要结构化输出的场景
+
+**示例**：
+```typescript
+const response = await client.call({
+  messages: [{ role: 'user', content: '请介绍一下人工智能' }],
+  temperature: 0.7
+})
+```
+
+---
+
+#### 2. 需要结构化数据
+
+**推荐模式**：JSON Mode
+
+**特点**：
+- `stream: false`
+- `response_format: { type: "json_object" }`
+- `temperature: 0.2-0.3`
+- 提示词中明确要求 JSON
+
+**适用场景**：
+- 数据提取
+- API 响应
+- 配置生成
+- 需要程序解析的场景
+
+**示例**：
+```typescript
+const response = await client.callJSON({
+  messages: [
+    { role: 'system', content: '请始终以 JSON 格式返回结果' },
+    { role: 'user', content: '提取信息，返回 JSON：...' }
+  ],
+  temperature: 0.3
+})
+```
+
+---
+
+#### 3. 需要实时反馈
+
+**推荐模式**：Stream Mode
+
+**特点**：
+- `stream: true`
+- `response_format: 无`
+- `temperature: 0.7-0.9`
+
+**适用场景**：
+- 长文本生成
+- 实时对话
+- 需要快速响应的场景
+- 提升用户体验的场景
+
+**示例**：
+```typescript
+for await (const chunk of client.callStream({
+  messages: [{ role: 'user', content: '写一篇长文章...' }],
+  temperature: 0.8
+})) {
+  process.stdout.write(chunk.choices[0]?.delta?.content || '')
+}
+```
+
+---
+
+#### 4. 结构化数据 + 实时反馈
+
+**推荐模式**：JSON + Stream Mode
+
+**特点**：
+- `stream: true`
+- `response_format: { type: "json_object" }`
+- `temperature: 0.2-0.3`
+- 提示词中明确要求 JSON
+
+**适用场景**：
+- 需要快速响应的结构化数据
+- 实时数据分析
+- 流式输出 JSON 的场景
+
+**示例**：
+```typescript
+for await (const chunk of client.callJSONStream({
+  messages: [
+    { role: 'system', content: '请以 JSON 格式返回' },
+    { role: 'user', content: '分析数据，返回 JSON：...' }
+  ],
+  temperature: 0.3
+})) {
+  process.stdout.write(chunk.choices[0]?.delta?.content || '')
+}
+```
+
+---
+
+#### 5. 需要精确控制输出结构
+
+**推荐模式**：JSON Mode + JSON Schema + Few-shot
+
+**特点**：
+- `stream: false`
+- `response_format: { type: "json_object" }`
+- `temperature: 0.2-0.3`
+- 提示词中包含 JSON Schema
+- 提供 Few-shot 示例
+
+**适用场景**：
+- 生产环境
+- 需要严格数据结构的场景
+- API 接口
+- 数据验证
+
+**示例**：
+```typescript
+const response = await client.callJSON({
+  messages: [
+    {
+      role: 'system',
+      content: '请严格按照 JSON Schema 返回结果'
+    },
+    {
+      role: 'user',
+      content: `
+## JSON Schema
+\`\`\`json
+{
+  "name": "string",
+  "age": "number"
+}
+\`\`\`
+
+## Examples
+输入：张三，25岁
+输出：{"name": "张三", "age": 25}
+
+## User Input
+输入：李四，30岁
+      `
+    }
+  ],
+  temperature: 0.2
+})
+```
+
+---
+
+#### 6. 需要机器解析的结构化输出
+
+**推荐模式**：XML 标签格式 + Few-shot
+
+**特点**：
+- `stream: false`
+- `response_format: 无`（或根据需求设置）
+- `temperature: 0.2-0.3`
+- 使用 XML 标签隔离各部分
+- 提供 Few-shot 示例
+
+**适用场景**：
+- 数据提取
+- 信息结构化
+- 需要 XML 格式输出的场景
+- 复杂多步骤任务
+
+**示例**：
+```typescript
+const response = await client.call({
+  messages: [{
+    role: 'user',
+    content: `
+<task>数据提取助手</task>
+<instructions>提取姓名、年龄</instructions>
+<output_format>
+<person>
+  <name>姓名</name>
+  <age>年龄</age>
+</person>
+</output_format>
+<examples>
+<example>
+<input>张三，25岁</input>
+<output>
+<person>
+  <name>张三</name>
+  <age>25</age>
+</person>
+</output>
+</example>
+</examples>
+<user_input>李四，30岁</user_input>
+    `
+  }],
+  temperature: 0.3
+})
+```
+
+---
+
+### 快速决策表
+
+| 需求 | 推荐模式 | 关键参数 |
+|------|---------|----------|
+| 简单对话 | 普通模式 | `temperature: 0.7` |
+| 结构化数据 | JSON Mode | `response_format: { type: "json_object" }` + 提示词要求 JSON |
+| 实时反馈 | Stream Mode | `stream: true` |
+| 结构化 + 实时 | JSON + Stream | `stream: true` + `response_format: { type: "json_object" }` |
+| 精确控制 | JSON + Schema + Few-shot | `response_format` + JSON Schema + 示例 |
+| 机器解析 | XML + Few-shot | XML 标签 + 示例 |
+
+### 提示词格式选择
+
+| 场景 | 推荐格式 | 原因 |
+|------|---------|------|
+| 复杂任务说明 | Markdown | 结构清晰，易于人类阅读和维护 |
+| 数据提取 | XML | 边界清晰，易于机器解析 |
+| 需要示例引导 | XML + Few-shot | 标签隔离示例，结构清晰 |
+| 简单任务 | 纯文本 | 简洁直接 |
+
 ## 最佳实践
 
 1. **结构化提示词**: 使用 Markdown 或 XML 让提示词更清晰
 2. **明确输出格式**: 使用 Schema 和示例明确期望的输出
-3. **合理使用模式**: 根据场景选择合适的调用模式
+3. **合理使用模式**: 根据场景选择合适的调用模式（参考上面的选择指南）
 4. **验证输出**: 始终验证 LLM 的输出是否符合预期
 5. **错误处理**: 处理 JSON 解析失败等异常情况
+6. **Few-shot 学习**: 对于复杂任务，提供 2-5 个示例提升准确率
+7. **XML 标签隔离**: 使用 XML 标签清晰分隔指令、示例、输入等部分
 
 ## 示例总结表
 

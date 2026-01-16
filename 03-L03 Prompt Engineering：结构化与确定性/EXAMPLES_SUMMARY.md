@@ -16,6 +16,7 @@
 | **7** | **控制 JSON 输出内容** | `07-json-output-control.ts` | `stream: false`<br>`response_format: { type: "json_object" }`<br>`temperature: 0.2-0.3` | 包含 JSON Schema、示例、约束的提示词 | 精确符合 Schema 的 JSON<br>格式完全可控 | 通过 Schema、示例、约束精确控制输出 | 需要严格数据结构的生产环境 |
 | **8** | **JSON Mode 对比** | `08-json-mode-comparison.ts` | 对比三种方式：<br>1. 仅提示词要求 JSON<br>2. 仅设置 response_format<br>3. 两者结合 | 产品评论分析任务 | 对比三种方式的输出差异 | 理解提示词要求与 API 参数的区别 | 理解 JSON mode 的工作原理 |
 | **9** | **response_format 与提示词关系** | `09-json-format-requirement.ts` | 测试三种情况：<br>1. 仅 response_format<br>2. 仅提示词要求<br>3. 两者结合 | 数据提取任务 | 展示错误情况和正确做法 | 理解为什么必须同时使用提示词和参数 | 避免常见错误，掌握最佳实践 |
+| **10** | **XML 标签隔离与 Few-shot** | `10-xml-isolation-fewshot.ts` | `stream: false`<br>`response_format: 无`<br>`temperature: 0.2-0.3` | XML 标签格式提示词 + Few-shot 示例 | 结构化 XML 输出<br>格式高度一致<br>准确率高 | 展示 XML 标签隔离和 Few-shot 学习的优势 | 复杂数据提取、需要高准确率的场景 |
 
 ## 详细参数对比
 
@@ -33,6 +34,7 @@
 | 07-JSON 控制 | `false` | `{ type: "json_object" }` | `0.2-0.3` | JSON Schema |
 | 08-对比 | `false` | 三种情况 | `0.3` | - |
 | 09-关系 | `false` | 三种情况 | `0.3` | - |
+| 10-XML+Few-shot | `false` | 无 | `0.2-0.3` | XML 标签 + Few-shot |
 
 ### 提示词格式对比
 
@@ -43,6 +45,7 @@
 | 05-Markdown | Markdown 格式 | 使用标题、列表 | 结构清晰，易于阅读 |
 | 06-XML | XML 标签 | 使用标签分隔 | 边界清晰，易于解析 |
 | 07-JSON 控制 | Markdown + JSON Schema + 示例 | 包含 Schema 和示例 | 精确控制输出结构 |
+| 10-XML+Few-shot | XML 标签 + Few-shot 示例 | XML 标签隔离 + 多个示例 | 结构清晰，准确率高 |
 
 ## 输出格式对比
 
@@ -141,6 +144,7 @@ npm run example:json-requirement # 示例 9
 | `07-json-output-control.ts` | 7 | 精确控制 JSON 输出 |
 | `08-json-mode-comparison.ts` | 8 | JSON mode 对比 |
 | `09-json-format-requirement.ts` | 9 | response_format 与提示词关系 |
+| `10-xml-isolation-fewshot.ts` | 10 | XML 标签隔离与 Few-shot 学习 |
 
 ---
 

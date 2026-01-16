@@ -16,7 +16,8 @@
     "example:json-control": "ts-node src/examples/07-json-output-control.ts",
     "example:json-comparison": "ts-node src/examples/08-json-mode-comparison.ts",
     "example:json-manual": "ts-node src/examples/02b-json-mode-manual.ts",
-    "example:json-requirement": "ts-node src/examples/09-json-format-requirement.ts"
+    "example:json-requirement": "ts-node src/examples/09-json-format-requirement.ts",
+    "example:xml-fewshot": "ts-node src/examples/10-xml-isolation-fewshot.ts"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
