@@ -204,7 +204,6 @@ async function main() {
   ]
 
   console.log('=== DeepSeek CLI Chat with Tools ===')
-  console.log("Try asking: '北京天气怎么样？'")
   console.log("Type 'quit' to exit.\n")
 
   const readline = await import('readline')

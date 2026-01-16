@@ -1,0 +1,29 @@
+{
+  "name": "03-prompt-engineering",
+  "version": "1.0.0",
+  "description": "Prompt Engineering: 结构化与确定性",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "example:normal": "ts-node src/examples/01-normal-mode.ts",
+    "example:json": "ts-node src/examples/02-json-mode.ts",
+    "example:stream": "ts-node src/examples/03-stream-mode.ts",
+    "example:json-stream": "ts-node src/examples/04-json-stream-mode.ts",
+    "example:markdown": "ts-node src/examples/05-markdown-prompt.ts",
+    "example:xml": "ts-node src/examples/06-xml-prompt.ts",
+    "example:json-control": "ts-node src/examples/07-json-output-control.ts",
+    "example:json-comparison": "ts-node src/examples/08-json-mode-comparison.ts",
+    "example:json-manual": "ts-node src/examples/02b-json-mode-manual.ts",
+    "example:json-requirement": "ts-node src/examples/09-json-format-requirement.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3"
+  }
+}
