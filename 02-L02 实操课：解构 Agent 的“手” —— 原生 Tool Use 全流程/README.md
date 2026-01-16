@@ -47,6 +47,21 @@ sequenceDiagram
     App->>User: 显示最终结果
 ```
 
+### 🧠 逻辑运行流程 (Logic Flow)
+
+```mermaid
+flowchart TD
+    A([开始]) --> B["用户输入请求"]
+    B --> C["构建 Messages 历史"]
+    C --> D["调用 LLM (携带 Tools 定义)"]
+    D --> E{"是否有 tool_calls?"}
+    E -- "是" --> F["执行本地工具函数"]
+    F --> G["将结果追加到 Messages"]
+    G --> D
+    E -- "否" --> H["输出最终回答"]
+    H --> I([结束])
+```
+
 ---
 
 ## 🛠️ 运行指南
