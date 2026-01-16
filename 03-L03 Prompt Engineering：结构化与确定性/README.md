@@ -1,6 +1,8 @@
 # L03 Prompt Engineering：结构化与确定性
 
-[Prompt_Engineering_Structure_Control.pdf](https://github.com/user-attachments/files/24669970/Prompt_Engineering_Structure_Control.pdf)
+## 课件
+
+[Prompt_Engineering_Structure_Control.pdf](https://github.com/user-attachments/files/24670031/Prompt_Engineering_Structure_Control.pdf)
 
 https://github.com/user-attachments/assets/db60f66d-6d2d-4219-ae21-60a76e654ccf
 
