@@ -1,5 +1,7 @@
 # L03 Prompt Engineering：结构化与确定性
 
+https://github.com/user-attachments/assets/db60f66d-6d2d-4219-ae21-60a76e654ccf
+
 本课程深入探讨如何通过结构化的提示词设计和 API 参数配置，实现更确定、更可控的 LLM 输出。
 
 ## 课程目标
