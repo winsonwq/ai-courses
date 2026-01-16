@@ -55,11 +55,15 @@ flowchart TD
     B --> C["构建 Messages 历史"]
     C --> D["调用 LLM (携带 Tools 定义)"]
     D --> E{"是否有 tool_calls?"}
-    E -- "是" --> F["执行本地工具函数"]
-    F --> G["将结果追加到 Messages"]
-    G --> D
-    E -- "否" --> H["输出最终回答"]
-    H --> I([结束])
+    E -- "是" --> F["将 Assistant 消息(含 tool_calls)加入 Messages"]
+    F --> G["遍历 tool_calls 列表"]
+    G --> H["执行本地工具函数"]
+    H --> I["将 Tool 结果消息加入 Messages"]
+    I --> J{"是否还有未执行的调用?"}
+    J -- "是" --> G
+    J -- "否" --> D
+    E -- "否" --> K["输出最终回答"]
+    K --> L([结束])
 ```
 
 ---
