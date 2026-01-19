@@ -1,0 +1,30 @@
+{
+  "name": "l05-mcp-protocol",
+  "version": "1.0.0",
+  "description": "第 1 课：协议解构 —— MCP 的架构哲学与通信原理",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "server": "tsx src/server/index.ts",
+    "client": "tsx src/client/index.ts",
+    "example:analyzer": "tsx src/examples/protocol-analyzer.ts",
+    "demo": "tsx src/examples/interactive-demo.ts",
+    "clean": "rm -rf dist logs"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "json-rpc",
+    "ai-agent"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {}
+}
