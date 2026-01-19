@@ -2,6 +2,8 @@
 
 AI 课程学习笔记与代码。
 
+<img width="2816" height="1536" alt="d6a8da3aa69ae57c2e8bc3684ba039fd" src="https://github.com/user-attachments/assets/06f861a1-f7b3-44ab-9a89-c7647ad38a6c" />
+
 ## 课程列表
 
 - [01-llm](./01-llm) - 大语言模型基础
