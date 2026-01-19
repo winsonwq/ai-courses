@@ -1,0 +1,57 @@
+# AI 忽略文件
+
+此文件指定 AI Agent 不应处理的文件和目录。
+
+## 构建产物
+dist/
+build/
+out/
+*.js.map
+*.d.ts.map
+
+## 依赖
+node_modules/
+.pnp/
+.pnp.js
+
+## 测试覆盖率
+coverage/
+.nyc_output/
+
+## 日志
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+## 环境变量
+.env
+.env.local
+.env.*.local
+
+## IDE 配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+## 临时文件
+*.tmp
+*.temp
+.cache/
+
+## 大型数据文件
+*.csv
+*.json.bak
+data/raw/
+data/processed/
+
+## 文档生成
+docs/generated/
+api-docs/
+
+## 其他
+.DS_Store
+Thumbs.db
