@@ -88,6 +88,42 @@
 3. **Client 发送 `notifications/initialized`**：
    * 确认握手完成，开始正常通信。
 
+**4. MCP 协议方法列表**
+
+MCP 2024-11-05 协议共定义了 **16+ 个方法**，按功能分类如下：
+
+| 方法名 | 类型 | 方向 | 用途 |
+|--------|------|------|------|
+| **基础生命周期** |
+| `initialize` | 请求 | Client → Server | 初始化会话，协商协议版本和能力 |
+| `notifications/initialized` | 通知 | Client → Server | 握手完成，通知 Server 已准备好 |
+| **Tools（工具）** |
+| `tools/list` | 请求 | Client → Server | 获取 Server 提供的所有工具列表 |
+| `tools/call` | 请求 | Client → Server | 调用指定的工具，传入参数 |
+| `notifications/tools/list_changed` | 通知 | Server → Client | 工具列表发生变化时通知 Client |
+| **Resources（资源）** |
+| `resources/list` | 请求 | Client → Server | 列出可用的直接资源 |
+| `resources/templates/list` | 请求 | Client → Server | 列出资源模板（参数化的 URI 模板） |
+| `resources/read` | 请求 | Client → Server | 读取指定 URI 的资源内容 |
+| `resources/subscribe` | 请求 | Client → Server | 订阅资源变化 |
+| **Prompts（提示词）** |
+| `prompts/list` | 请求 | Client → Server | 列出可用的提示词模板 |
+| `prompts/get` | 请求 | Client → Server | 获取指定的提示词（可填充参数） |
+| `notifications/prompts/list_changed` | 通知 | Server → Client | 提示词列表发生变化时通知 Client |
+| **Roots（根目录）** |
+| `roots/list` | 请求 | Server → Client | Server 请求 Client 提供文件系统根目录列表 |
+| `notifications/roots/list_changed` | 通知 | Client → Server | 根目录列表发生变化时通知 Server |
+| **Sampling（采样）** |
+| `sampling/createMessage` | 请求 | Server → Client | Server 请求 Client 生成模型响应 |
+| **Utilities（工具类）** |
+| `completion/complete` | 请求 | Client → Server | 参数自动补全 |
+
+**说明：**
+- **类型**：请求（Request）需要响应，通知（Notification）不需要响应
+- **方向**：表示消息的发送方向
+
+> 💡 **提示**：本课程重点讲解核心的 4 个方法（`initialize`、`notifications/initialized`、`tools/list`、`tools/call`），这些方法足以演示完整的 MCP 通信流程。其他方法的使用方式类似，可以参考 [MCP 官方文档](https://modelcontextprotocol.io/specification/2024-11-05/)。
+
 ---
 
 ## 🛠️ 课后实战产出 (Deliverable)
