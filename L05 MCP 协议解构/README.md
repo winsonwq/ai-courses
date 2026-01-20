@@ -16,7 +16,40 @@
 **1. 以前的世界：碎片化的集成**
 
 * **现象**：如果你想让 ChatGPT 访问 Google Drive，你需要写一个 Plugin；如果你想让 Claude 访问，你又要写一个 Tool；如果你想让 IDE (Cursor) 访问，你还得写一个 Extension。
-* **问题**：如果有 N 个 AI 模型宿主，和 M 个数据源，开发者需要维护 N×M 个连接器。
+
+* **问题：N×M 集成灾难**
+
+  想象一下这个场景：
+  
+  - **3 个 AI 宿主**：ChatGPT、Claude、Cursor IDE
+  - **3 个数据源**：Google Drive、SQLite 数据库、天气 API
+  
+  传统方式下，你需要开发多少个连接器？
+  
+  ```
+  ChatGPT → Google Drive    (连接器 1)
+  ChatGPT → SQLite          (连接器 2)
+  ChatGPT → Weather API     (连接器 3)
+  Claude  → Google Drive    (连接器 4)
+  Claude  → SQLite          (连接器 5)
+  Claude  → Weather API     (连接器 6)
+  Cursor  → Google Drive    (连接器 7)
+  Cursor  → SQLite          (连接器 8)
+  Cursor  → Weather API     (连接器 9)
+  ```
+  
+  **答案：3 × 3 = 9 个连接器！**
+  
+  如果未来有 5 个 AI 宿主和 10 个数据源呢？那就是 **5 × 10 = 50 个连接器**！😱
+  
+  **更糟糕的是**：
+  - 每个连接器都要单独维护和更新
+  - 每个连接器的 API 可能都不一样
+  - 添加一个新数据源，就要为所有宿主都写一遍
+  - 添加一个新宿主，就要为所有数据源都写一遍
+  
+  > 💡 **生活化比喻**：这就像你要给 3 个不同品牌的手机（iPhone、华为、小米）都配一套充电器、耳机、数据线。每个品牌都要单独买一套，总共需要 9 件配件。而 MCP 就像 USB-C 标准，一个配件所有设备都能用！
+
 * **MCP 的解法**：建立统一标准。Server 只写一次（针对 MCP 标准），所有的 Client（Claude, Cursor, web UI）都能直接用。类似于 **USB 协议** —— 鼠标（Server）不需要知道自己插在 Windows 还是 Mac（Host）上，只要符合 USB 标准就能用。
 
 **集成灾难问题示意图：**
@@ -85,9 +118,40 @@ graph TB
 ```
 
 **问题分析：**
-- **传统方式**：需要维护 **N×M = 9 个**连接器（3 个宿主 × 3 个数据源）
-- **MCP 方式**：只需要维护 **M = 3 个** Server（每个数据源一个）
-- **优势**：Server 只需实现一次 MCP 标准，所有 Host 都能使用
+
+让我们用具体数字来对比：
+
+| 场景 | 传统方式 | MCP 方式 | 节省 |
+|------|---------|---------|------|
+| **3 个宿主 × 3 个数据源** | 需要 9 个连接器 | 需要 3 个 Server | 减少 67% |
+| **5 个宿主 × 10 个数据源** | 需要 50 个连接器 | 需要 10 个 Server | 减少 80% |
+| **10 个宿主 × 20 个数据源** | 需要 200 个连接器 | 需要 20 个 Server | 减少 90% |
+
+**关键优势：**
+- **传统方式**：每增加一个数据源，就要为所有 N 个宿主都写一遍连接器
+- **MCP 方式**：每增加一个数据源，只需要写一个 MCP Server，所有宿主自动可用
+- **维护成本**：传统方式需要维护 N×M 个代码库，MCP 方式只需要维护 M 个 Server
+
+**实际例子：**
+
+假设你开发了一个"天气查询服务"：
+
+**传统方式**：
+```
+❌ 需要开发：
+  - ChatGPT Plugin（适配 ChatGPT API）
+  - Claude Tool（适配 Claude API）
+  - Cursor Extension（适配 Cursor API）
+  - 未来每个新宿主都要重新开发...
+```
+
+**MCP 方式**：
+```
+✅ 只需要开发：
+  - 一个 Weather MCP Server（符合 MCP 标准）
+  - 所有宿主（ChatGPT、Claude、Cursor...）自动可用
+  - 未来新宿主也无需额外开发
+```
 
 ### 第二部分：架构拓扑 (The Architecture)
 
