@@ -272,17 +272,191 @@ graph LR
 
 **1. 传输层 (Transports)**
 
-* **Stdio (Standard Input/Output)**：
-  * **场景**：本地 Agent。
-  * **原理**：Client 启动一个子进程（Server），通过 `stdin` 发送 JSON，通过 `stdout` 接收 JSON。
-  * **优点**：零网络延迟，安全（完全本地），简单。
+MCP 支持三种主要的传输方式，每种方式适用于不同的场景：
 
-* **SSE (Server-Sent Events) over HTTP**：
-  * **场景**：远程服务、分布式部署。
-  * **原理**：
-    * Server -> Client：使用 SSE 建立长连接推送消息（适合流式传输）。
-    * Client -> Server：使用标准 HTTP POST 发送请求。
-  * **设计哲学**：为什么不是 WebSocket？MCP 官方认为 HTTP POST + SSE 更符合 RESTful 语义，更容易被防火墙和网关处理。
+#### 1.1 Stdio 模式（标准输入输出）
+
+* **适用场景**：
+  * 命令行工具集成
+  * 进程间通信
+  * 本地开发调试
+  * IDE 插件集成（如 Cursor、VS Code）
+
+* **工作原理**：
+  * Client 启动一个子进程（Server）
+  * 通过 `stdin` 发送 JSON-RPC 请求
+  * 通过 `stdout` 接收 JSON-RPC 响应
+  * 日志输出到 `stderr`（不影响协议通信）
+
+* **优点**：
+  * ✅ 零网络延迟
+  * ✅ 安全（完全本地）
+  * ✅ 实现简单
+  * ✅ 适合单客户端场景
+
+* **代码示例**（服务器端）：
+```javascript
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+
+const server = new McpServer({
+  name: "weather-mcp-server-stdio",
+  version: "1.0.0"
+});
+
+// 创建 stdio 传输
+const transport = new StdioServerTransport();
+await server.connect(transport);
+```
+
+* **代码示例**（客户端）：
+```javascript
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+
+  // StdioClientTransport 会自动启动服务器进程
+  const transport = new StdioClientTransport({
+    command: "node",
+    args: ["src/reference/index-stdio.js"]
+  });
+
+const client = new Client({
+  name: "my-client",
+  version: "1.0.0"
+});
+
+await client.connect(transport);
+```
+
+#### 1.2 HTTP JSON 响应模式
+
+* **适用场景**：
+  * 简单的 Web API 集成
+  * 传统的请求-响应模式
+  * 不需要服务器主动推送的场景
+
+* **工作原理**：
+  * 使用 `StreamableHTTPServerTransport`，设置 `enableJsonResponse: true`
+  * 客户端发送 HTTP POST 请求
+  * 服务器立即返回 JSON 响应
+  * 类似传统的 REST API
+
+* **优点**：
+  * ✅ 简单直接，类似传统 REST API
+  * ✅ 每个请求立即返回完整响应
+  * ✅ 易于集成到现有 Web 应用
+
+* **缺点**：
+  * ❌ 不支持服务器主动推送
+  * ❌ 不支持流式传输
+
+* **代码示例**（服务器端）：
+```javascript
+import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
+
+const transport = new StreamableHTTPServerTransport({
+  sessionIdGenerator: undefined,
+  enableJsonResponse: true  // 👈 启用 JSON 响应模式
+});
+
+app.post("/mcp", async (req, res) => {
+  await server.connect(transport);
+  await transport.handleRequest(req, res, req.body);
+});
+```
+
+#### 1.3 SSE 流式模式（Server-Sent Events）
+
+* **适用场景**：
+  * 需要服务器主动推送消息
+  * 实时进度更新
+  * 长时间运行的异步操作
+  * 流式传输数据
+
+* **工作原理**：
+  * 使用 `StreamableHTTPServerTransport`，设置 `enableJsonResponse: false`
+  * 客户端通过 GET 请求建立 SSE 连接
+  * 客户端通过 POST 请求发送消息
+  * 服务器通过 SSE 流推送响应和通知
+
+* **优点**：
+  * ✅ 支持服务器主动推送消息
+  * ✅ 支持流式传输（实时进度更新）
+  * ✅ 支持长时间运行的异步操作
+  * ✅ 支持多个响应消息（如进度通知）
+
+* **缺点**：
+  * ❌ 需要客户端支持 SSE
+  * ❌ 实现相对复杂
+  * ❌ 需要管理 Session
+
+* **代码示例**（服务器端）：
+```javascript
+import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
+import { randomUUID } from "node:crypto";
+
+// GET 端点：建立 SSE 连接
+app.get("/mcp", async (req, res) => {
+  const transport = new StreamableHTTPServerTransport({
+    sessionIdGenerator: () => randomUUID(),
+    enableJsonResponse: false  // 👈 SSE 模式
+  });
+  
+  await server.connect(transport);
+  await transport.handleRequest(req, res);
+});
+
+// POST 端点：发送消息（响应通过 SSE 推送）
+app.post("/mcp", async (req, res) => {
+  const sessionId = req.headers['mcp-session-id'];
+  const transport = transports.get(sessionId);
+  
+  await transport.handleRequest(req, res, req.body);
+});
+```
+
+* **代码示例**（客户端）：
+```javascript
+import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
+
+// 创建 Streamable HTTP 传输（支持 SSE）
+const transport = new StreamableHTTPClientTransport(new URL("http://localhost:3001/mcp"));
+
+// 监听传输层的消息（接收 SSE 推送）
+transport.onmessage = (message) => {
+  if (message.method === 'notifications/message') {
+    const { level, data } = message.params || {};
+    console.log(`[${level}] ${data}`);
+  }
+};
+
+const client = new Client({
+  name: "my-client",
+  version: "1.0.0"
+});
+
+await client.connect(transport);
+```
+
+**三种模式对比：**
+
+| 特性 | Stdio 模式 | HTTP JSON 模式 | SSE 流式模式 |
+|------|-----------|---------------|-------------|
+| 通信方式 | stdin/stdout | HTTP POST | HTTP GET + SSE |
+| 适用场景 | 命令行、IDE 插件 | Web API | Web 实时应用 |
+| 服务器推送 | ✅ 支持 | ❌ 不支持 | ✅ 支持 |
+| 流式传输 | ✅ 支持 | ❌ 不支持 | ✅ 支持 |
+| 连接管理 | 进程生命周期 | 无状态 | Session 管理 |
+| 复杂度 | 简单 | 简单 | 较复杂 |
+| 延迟 | 最低 | 低 | 中等 |
+
+**设计哲学**：为什么 SSE 而不是 WebSocket？
+
+MCP 官方选择 HTTP POST + SSE 而不是 WebSocket 的原因：
+- ✅ 更符合 RESTful 语义
+- ✅ 更容易被防火墙和网关处理
+- ✅ 支持 HTTP/2 和 HTTP/3
+- ✅ 浏览器原生支持，无需额外库
 
 **2. 消息格式：JSON-RPC 2.0**
 
@@ -355,7 +529,76 @@ sequenceDiagram
     Note over C,S: ✅ 握手完成，开始正常通信
 ```
 
-**4. MCP 协议方法列表**
+**4. 工具实现示例**
+
+下面是一个完整的工具实现示例，展示如何创建和注册 MCP 工具：
+
+```javascript
+import { z } from "zod";
+
+// 工具定义
+export const getWeatherTool = {
+  name: "getWeather",
+  definition: {
+    title: "Get Weather",
+    description: "获取指定城市的天气信息。支持的城市：成都、北京",
+    inputSchema: {
+      city: z.string().min(1)
+    }
+  },
+  handler: async (args, extra) => {
+    const { city } = args;
+    const server = extra?.server;
+    const sessionId = extra?.sessionId;
+
+    // 如果服务器支持日志推送，发送进度消息
+    if (server && sessionId) {
+      try {
+        await server.sendLoggingMessage({
+          level: 'info',
+          data: `正在查询 ${city} 的天气信息...`
+        }, sessionId);
+      } catch (error) {
+        // 忽略推送失败，不影响主要功能
+      }
+    }
+
+    // 模拟查询延迟
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // 返回天气信息
+    const weather = {
+      city: city,
+      temperature: "22°C",
+      condition: "多云",
+      humidity: "65%",
+      timestamp: new Date().toISOString()
+    };
+
+    return {
+      content: [{
+        type: "text",
+        text: JSON.stringify(weather, null, 2)
+      }]
+    };
+  }
+};
+
+// 注册工具
+server.registerTool(
+  getWeatherTool.name,
+  getWeatherTool.definition,
+  getWeatherTool.handler
+);
+```
+
+**关键点：**
+- **工具定义**：包含名称、描述和输入 Schema（使用 Zod 验证）
+- **工具处理器**：接收参数和额外信息（extra），返回内容数组
+- **服务器推送**：通过 `server.sendLoggingMessage()` 发送进度消息（需要 SSE 模式）
+- **错误处理**：返回 `isError: true` 表示工具执行失败
+
+**5. MCP 协议方法列表**
 
 MCP 2024-11-05 协议共定义了 **16+ 个方法**，按功能分类如下：
 
@@ -603,8 +846,9 @@ sequenceDiagram
 
 > 💡 **学习建议**：
 > - **首先学习连接时序图**（第 1-2 节），这是理解 MCP 协议的基础
-> - 然后对照代码实现（`src/client/stdio-client.ts`）理解具体实现细节
-> - 最后通过运行示例代码（`npm run example:analyzer`）观察实际的连接过程
+> - 然后对照代码实现（参考 `mcp_demo` 项目）理解具体实现细节
+> - 运行三种传输模式的示例代码，观察实际的连接过程
+> - 对比不同传输模式的特点和适用场景
 
 ---
 
@@ -703,29 +947,136 @@ npm install
 
 ### 运行示例
 
-#### 1. 运行协议分析器示例
+本课程提供了三种传输模式的完整示例，帮助你理解 MCP 协议的实际应用。
 
+#### 1. Stdio 模式示例（推荐入门）
+
+Stdio 模式是最简单的传输方式，适合本地开发和调试。
+
+**启动服务器：**
 ```bash
-npm run example:analyzer
+# 方式 1: 使用 npm 脚本
+npm run start:stdio
+
+# 方式 2: 直接运行
+node src/reference/index-stdio.js
 ```
 
-这个示例会展示完整的 MCP 通信流程，包括握手、工具列表查询和工具调用。
-
-#### 2. 运行完整的 Server + Client 演示
-
+**运行测试客户端：**
 ```bash
-# 终端 1: 启动 Server
-npm run server
-
-# 终端 2: 启动 Client
-npm run client
+# 在另一个终端运行
+npm run test:stdio
+# 或
+node test-stdio-client.js
 ```
 
-#### 3. 运行交互式演示
+**注意**：测试客户端会自动启动服务器进程（`src/reference/index-stdio.js`）。
 
+**特点：**
+- ✅ 最简单的实现方式
+- ✅ 零网络延迟
+- ✅ 适合单客户端场景
+- ✅ 支持服务器主动推送消息
+
+#### 2. HTTP JSON 响应模式示例
+
+HTTP JSON 模式适合简单的 Web API 集成。
+
+**启动服务器：**
 ```bash
-npm run demo
+# 方式 1: 使用 npm 脚本
+npm start
+
+# 方式 2: 直接运行
+node src/reference/index.js
+
+# 方式 3: 使用环境变量
+ENABLE_SSE=false node src/reference/index.js
 ```
+
+**测试 API：**
+```bash
+# 使用 curl 测试
+curl -X POST http://localhost:3000/mcp \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "tools/call",
+    "params": {
+      "name": "getWeather",
+      "arguments": {
+        "city": "成都"
+      }
+    },
+    "id": 1
+  }'
+```
+
+**特点：**
+- ✅ 简单直接，类似传统 REST API
+- ✅ 每个请求立即返回完整响应
+- ✅ 易于集成到现有 Web 应用
+- ❌ 不支持服务器主动推送
+
+#### 3. SSE 流式模式示例（高级）
+
+SSE 模式支持服务器主动推送和流式传输，适合实时应用。
+
+**启动服务器：**
+```bash
+# 方式 1: 使用 npm 脚本
+npm run start:sse
+
+# 方式 2: 使用命令行参数
+node src/reference/index.js --sse
+
+# 方式 3: 使用环境变量
+ENABLE_SSE=true node src/reference/index.js
+```
+
+**运行测试客户端：**
+```bash
+# 在另一个终端运行
+npm run test:sse
+# 或
+node test-sse-client.js
+```
+
+**特点：**
+- ✅ 支持服务器主动推送消息
+- ✅ 支持流式传输（实时进度更新）
+- ✅ 支持长时间运行的异步操作
+- ✅ 支持多个响应消息（如进度通知）
+
+**SSE 连接流程：**
+1. 客户端发送 GET 请求建立 SSE 连接
+2. 服务器返回 session ID
+3. 客户端通过 POST 请求发送消息（携带 session ID）
+4. 服务器通过 SSE 流推送响应和通知
+
+### 参考代码
+
+本课程提供了完整的三种传输模式实现，代码位于 `src/reference/` 目录：
+
+- **Stdio 模式**：`src/reference/index-stdio.js`
+- **HTTP JSON 模式**：`src/reference/index.js` (默认模式)
+- **SSE 流式模式**：`src/reference/index.js --sse`
+- **工具实现**：`src/reference/tools/` 目录
+  - `getWeather.js` - 基础天气查询工具
+  - `getWeatherSSE.js` - 展示 SSE 推送特性的工具
+
+### 工具说明
+
+课程示例提供了两个工具：
+
+1. **`getWeather`**：基础天气查询工具
+   - 支持所有传输模式
+   - 返回完整的天气信息
+
+2. **`getWeatherSSE`**：展示 SSE 推送特性的工具
+   - 仅支持 SSE 模式
+   - 分步骤推送天气信息的各个部分
+   - 展示服务器主动推送能力
 
 ---
 
@@ -737,18 +1088,27 @@ L05 MCP 协议解构/
 ├── QUICKSTART.md             # 快速开始指南
 ├── package.json              # 项目配置
 ├── tsconfig.json             # TypeScript 配置
+├── test-stdio-client.js      # Stdio 模式测试客户端
+├── test-sse-client.js        # SSE 模式测试客户端
 ├── src/
 │   ├── types/                # MCP 协议类型定义
 │   │   └── mcp.ts
-│   ├── server/               # MCP Server 实现
+│   ├── server/               # MCP Server 实现（TypeScript）
 │   │   ├── weather-server.ts # 天气服务示例
 │   │   └── index.ts
-│   ├── client/               # MCP Client 实现
+│   ├── client/               # MCP Client 实现（TypeScript）
 │   │   ├── stdio-client.ts   # Stdio 传输层
 │   │   └── index.ts
-│   └── examples/             # 示例代码
-│       ├── protocol-analyzer.ts  # 协议分析器
-│       └── interactive-demo.ts   # 交互式演示
+│   ├── examples/             # 示例代码（TypeScript）
+│   │   ├── protocol-analyzer.ts  # 协议分析器
+│   │   └── interactive-demo.ts   # 交互式演示
+│   └── reference/            # 参考实现（JavaScript，来自 mcp_demo）
+│       ├── index.js          # HTTP/SSE 服务器
+│       ├── index-stdio.js    # Stdio 服务器
+│       └── tools/            # 工具实现
+│           ├── index.js
+│           ├── getWeather.js
+│           └── getWeatherSSE.js
 └── logs/                     # 通信日志（运行时生成）
 ```
 

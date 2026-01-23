@@ -1,0 +1,25 @@
+{
+  "name": "l06-oauth-click-login",
+  "version": "1.0.0",
+  "description": "第 6 课：OAuth 2.0 点击即登录 —— 让 AI Agent 拥有\"主动发现\"能力",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "node --watch src/server/index.js",
+    "start": "node src/server/index.js",
+    "test": "node test-oauth-client.js"
+  },
+  "keywords": [
+    "oauth",
+    "mcp",
+    "model-context-protocol",
+    "authentication",
+    "ai-agent"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.3",
+    "express": "^4.18.2"
+  }
+}
