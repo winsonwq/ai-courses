@@ -11,6 +11,8 @@ AI 课程学习笔记与代码。
 - [L03 Prompt Engineering：结构化与确定性](./L03%20Prompt%20Engineering%EF%BC%9A%E7%BB%93%E6%9E%84%E5%8C%96%E4%B8%8E%E7%A1%AE%E5%AE%9A%E6%80%A7) - Prompt Engineering 实战：JSON Mode、Stream Mode、结构化提示词
 - [L04 AGENTS.md：AI Agent 配置文件详解](./L04%20AGENTS.md%EF%BC%9AAI%20Agent%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3) - AGENTS.md 配置文件详解：规则编写、自完善机制、标准与非标准配置
 - [L05 MCP 协议解构](./L05%20MCP%20%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%84) - MCP 的架构哲学与通信原理：协议解构、JSON-RPC 通信、Stdio/SSE 传输
+- [L06 OAuth 2.0 点击即登录](./L06%20OAuth%202.0%20%E7%82%B9%E5%87%BB%E5%8D%B3%E7%99%BB%E5%BD%95) - OAuth 2.0 原理与实战：三方平台接入
+- [L07 Agent Skills：从指令到能力的飞跃](./L07%20Agent%20Skills%EF%BC%9A%E4%BB%8E%E6%8C%87%E4%BB%A4%E5%88%B0%E8%83%BD%E5%8A%9B%E7%9A%84%E9%A3%9E%E8%B7%83) - Agent 核心能力扩展：Skill 定义、渐进式加载、目录规范与实战
 
 ## 辅助工具
 
