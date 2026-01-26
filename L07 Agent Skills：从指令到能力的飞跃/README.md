@@ -1,4 +1,4 @@
-[Agent_Skills_Standard.pdf](https://github.com/user-attachments/files/24860836/Agent_Skills_Standard.pdf)# L07 Agent Skills：从指令到能力的飞跃
+# L07 Agent Skills：从指令到能力的飞跃
 
 https://github.com/user-attachments/assets/81fdeba4-7365-454c-a4fd-2bcbd1edbcd6
 
