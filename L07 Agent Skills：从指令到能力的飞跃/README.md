@@ -1,4 +1,8 @@
-# L07 Agent Skills：从指令到能力的飞跃
+[Agent_Skills_Standard.pdf](https://github.com/user-attachments/files/24860836/Agent_Skills_Standard.pdf)# L07 Agent Skills：从指令到能力的飞跃
+
+https://github.com/user-attachments/assets/81fdeba4-7365-454c-a4fd-2bcbd1edbcd6
+
+[Agent_Skills_Standard.pdf](https://github.com/user-attachments/files/24860838/Agent_Skills_Standard.pdf)
 
 本课程将深入探讨 AI Agent 的 **Skill（技能）** 体系。我们将从定义、加载机制、目录结构以及与 MCP 的关系等多个维度进行解构。
 
