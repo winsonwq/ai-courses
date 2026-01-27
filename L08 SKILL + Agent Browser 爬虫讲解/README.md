@@ -1,5 +1,7 @@
 # L08 SKILL + Agent Browser 爬虫讲解
 
+https://github.com/user-attachments/assets/778ec1f4-669b-4ec2-beb4-0c108b04bc30
+
 本课程将带你回顾爬虫技术从“数据提取”到“AI 自主交互”的演进历程，并介绍如何通过 Skill 体系管理复杂的 Agent 浏览器能力。
 
 ---
