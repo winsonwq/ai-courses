@@ -1,11 +1,8 @@
 {
-  "name": "02-tools",
+  "name": "09-single-loop",
   "version": "1.0.0",
-  "description": "LLM API demo",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
     "dev": "ts-node src/index.ts"
   },
   "devDependencies": {

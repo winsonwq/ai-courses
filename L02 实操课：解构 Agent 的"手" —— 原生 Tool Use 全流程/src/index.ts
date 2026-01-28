@@ -1,3 +1,9 @@
+import dotenv from 'dotenv';
+import path from 'path';
+
+// 加载项目根目录的 .env 文件
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
 interface Message {
   role: string
   content: string
@@ -123,9 +129,9 @@ async function postFeishu(content: string): Promise<void> {
     console.log(`[Simulated Feishu Post]: ${content}`)
     return
   }
-  
+
   const fixedTitle = 'AI助手消息'
-  
+
   const requestBody = {
     msg_type: 'post',
     content: {
