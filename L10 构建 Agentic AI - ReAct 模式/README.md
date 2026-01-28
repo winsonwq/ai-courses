@@ -12,12 +12,12 @@
 
 ```mermaid
 graph TD
-    Start[用户输入] --> Thought[Thought: LLM 思考与规划]
-    Thought --> CheckStop{包含隐藏 JSON continue: false?}
+    Start[用户输入] --> Thought["Thought: LLM 思考与规划"]
+    Thought --> CheckStop{"包含隐藏 JSON continue: false?"}
     CheckStop -- 是 --> Final[输出回答并结束]
-    CheckStop -- 否 --> Action[Action: LLM 产生工具调用]
+    CheckStop -- 否 --> Action["Action: LLM 产生工具调用"]
     Action --> Execute[执行具体工具]
-    Execute --> Observation[Observation: LLM 总结观察结果]
+    Execute --> Observation["Observation: LLM 总结观察结果"]
     Observation --> Thought
 ```
 
