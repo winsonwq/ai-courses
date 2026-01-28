@@ -1,5 +1,5 @@
 {
-  "name": "09-single-loop",
+  "name": "09-autonomous-agent-loop",
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {

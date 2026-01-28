@@ -1,8 +1,8 @@
-# L09 构建 Agentic AI 单循环模式 (Single Loop Pattern)
+# L09 构建 Agentic AI - 自主代理循环 (Autonomous Agent Loop)
 
-## 1. 什么是单循环模式？
+## 1. 什么是自主代理循环 (Autonomous Agent Loop)？
 
-单循环模式（Single Loop Pattern），有时也被称为“自主代理循环”（Autonomous Agent Loop），是构建 Agent 最基础、最直观的模式。
+**自主代理循环 (Autonomous Agent Loop)**，有时也被简称为“单循环模式”，是构建 Agent 最基础、最直观的模式。
 
 它的核心逻辑非常简单：**将 LLM 放入一个 `while (true)` 循环中。**
 

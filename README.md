@@ -14,7 +14,7 @@ AI 课程学习笔记与代码。
 - [L06 OAuth 2.0 点击即登录](./L06%20OAuth%202.0%20%E7%82%B9%E5%87%BB%E5%8D%B3%E7%99%BB%E5%BD%95) - OAuth 2.0 原理与实战：三方平台接入
 - [L07 Agent Skills：从指令到能力的飞跃](./L07%20Agent%20Skills%EF%BC%9A%E4%BB%8E%E6%8C%87%E4%BB%A4%E5%88%B0%E8%83%BD%E5%8A%9B%E7%9A%84%E9%A3%9E%E8%B7%83) - Agent 核心能力扩展：Skill 定义、渐进式加载、目录规范与实战
 - [L08 SKILL + Agent Browser 爬虫讲解](./L08%20SKILL%20+%20Agent%20Browser%20%E7%88%AC%E8%99%AB%E8%AE%B2%E8%A7%A3) - 爬虫技术演进与 Skill 体系：BeautifulSoup、Selenium、AI 自主决策 实战
-- [L09 构建 Agentic AI 单循环模式](./L09%20%E6%9E%84%E5%BB%BA%20Agentic%20AI%20%E5%8D%95%E5%BE%AA%E7%8E%AF%E6%A8%A1%E5%BC%8F) - 基础 Agent 循环：从 `while(true)` 到自主决策
+- [L09 构建 Agentic AI - 自主代理循环 (Autonomous Agent Loop)](./L09%20%E6%9E%84%E5%BB%BA%20Agentic%20AI%20-%20%E8%87%AA%E4%B8%BB%E4%BB%A3%E7%90%86%E5%BE%AA%E7%8E%AF%20(Autonomous%20Agent%20Loop)) - 基础 Agent 循环：从 `while(true)` 到自主决策
 - [L10 构建 Agentic AI - ReAct 模式](./L10%20%E6%9E%84%E5%BB%BA%20Agentic%20AI%20-%20ReAct%20%E6%A8%A1%E5%BC%8F) - 高级 Agent 模式：Thought-Action-Observation 闭环架构
 
 ## 辅助工具
