@@ -1,5 +1,7 @@
 # L10 构建 Agentic AI - ReAct 模式
 
+https://github.com/user-attachments/assets/7a34eccd-eb8e-4167-80df-d42b7ec64431
+
 ## 1. 什么是 ReAct 模式？
 
 **ReAct (Reasoning + Acting)** 是一种由 Google 和普林斯顿大学提出的经典 Agent 模式。它的核心思想是：将 **推理（Reasoning）** 和 **行动（Acting）** 显式结合在一起。
