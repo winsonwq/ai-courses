@@ -2,7 +2,7 @@
 
 在本课中，我们将探讨如何将 L09 中的**单 Agent 循环**演进为**多 Agents (Multi-Agents) 协作工作流**。
 
-![多 Agents 协作工作流架构](./assets/multi-agent-workflow.png)
+
 
 ---
 
