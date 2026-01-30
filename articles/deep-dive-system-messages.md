@@ -89,6 +89,13 @@ I cannot help with that.
 3.  **权重覆盖**：
     如果后出现的 System Message 与开头的设定冲突，现代模型通常倾向于**遵从最新指令**。这允许开发者在不清除历史记忆的前提下，动态修正或更新 AI 的行为规范。
 
+### 2.5 System Message 与 MoE (Mixture of Experts) 架构的共鸣
+
+随着 GPT-4, Mixtral, DeepSeek 等**混合专家模型 (MoE)** 的普及，System Message 的重要性被进一步放大。在 MoE 架构中，模型由多个专注于不同领域的“专家”子网络（Experts）和一个负责分发的“路由器”（Router/Gate）组成。
+
+*   **辅助路由决策 (Guiding the Router)**：System Message 实际上是在对话的一开始就向 Router 发出了强烈的信号。当你设定 "你是一个 Python 资深工程师" 时，不仅是在定义语义，很可能是在帮助 Router 更高概率地激活负责代码生成的专家模块，而不是负责文学创作的专家。这就像在会议开始前定好了基调，让相关的专家准备好发言。
+*   **统一专家行为 (Unifying Experts)**：MoE 模型的挑战之一是专家间的一致性。System Message 充当了“总指挥”的角色。无论 Router 在每一层选择了哪些专家参与计算，System Message 的 KV Cache 都在持续广播统一的约束指令，确保不同的专家在同一个“人设”框架下协同工作，避免出现“虽然专家换了，但说话风格割裂”的现象。
+
 ## 3. 最佳实践：如何编写强大的 System Message
 
 既然 System Message 实际上在重塑 LLM 的“短期心智”，通过精心设计的 Prompt 就能大幅提升效果。
