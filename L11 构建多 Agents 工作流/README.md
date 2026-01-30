@@ -1,8 +1,8 @@
 # L11 构建多 Agents 工作流：从“全能助手”到“专家协作”
 
+https://github.com/user-attachments/assets/098f1a2b-c3d0-43f0-8f0f-75b257501800
+
 在本课中，我们将探讨如何将 L09 中的**单 Agent 循环**演进为**多 Agents (Multi-Agents) 协作工作流**。
-
-
 
 ---
 
