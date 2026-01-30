@@ -127,4 +127,4 @@ System Message 是连接人类意图与机器智能的**桥梁与缰绳**。它�
 *   [Anthropic: System Prompts](https://docs.anthropic.com/claude/docs/system-prompts)
 *   [OpenAI: System message behavior](https://platform.openai.com/docs/guides/chat/introduction)
 *   [Azure AI: System message framework](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/system-message)
-*   [Understanding the Role of System Prompts in LLMs](https://arxiv.org/abs/2307.xxxx) (Conceptual Reference)
+*   [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) (The foundational paper on using System Instructions/Constitutions to steer LLM behavior)
