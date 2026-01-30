@@ -27,3 +27,5 @@ AI 课程学习笔记与代码。
 - [LLM 的“聚光灯”：彻底搞懂 Attention 机制](./articles/deep-dive-attention-mechanism.md)
 - [System Message：重塑 LLM「心智」的潜意识指令](./articles/deep-dive-system-messages.md)
 - [深度拆解：稀疏性的复兴——全方位解读 LLM MoE 架构](./articles/llm-moe-architecture-deep-dive.md)
+- [解密 Transformer：大语言模型背后的「思维引擎」](./articles/llm-transformer-basics.md)
+- [深入 Transformer 内核：现代 LLM 的架构演进与优化](./articles/llm-transformer-advanced-optimizations.md)
