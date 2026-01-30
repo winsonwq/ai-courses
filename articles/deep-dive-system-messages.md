@@ -73,6 +73,22 @@ I cannot help with that.
 *   **人设激活**：当你设定“你是一个暴躁的厨师”时，System Message 实际上抑制了模型中“礼貌、温和”相关的权重路径，高亮了“粗鲁、批评、烹饪术语”相关的潜空间路径。
 *   **思维链（Chain-of-Thought）激发**：如果在 System Message 中植入“在回答前通过 <thinking> 标签逐步思考”，这不仅仅是格式要求，更是强行切换了模型的推理模式，使其从“直觉反应（System 1）”切换到“慢思考（System 2）”。
 
+### 2.4 历史与阶段性重现：对抗遗忘与动态重定向
+
+在标准的 API 调用中，System Message 通常只出现在 `messages` 数组的第一个位置。但在长窗口对话或复杂的 Agent 工作流中，我们有时会在历史记录（History）中**阶段性地再次插入** System Message。这种“多 System Message”策略会产生独特的影响：
+
+1.  **对抗“迷失中间” (Lost-in-the-Middle) 现象**：
+    随着对话长度增加，Transformer 模型对上下文中间部分的关注度往往会下降（U型注意力曲线）。早期的 System Message 可能会被“稀释”。在对话中途重新发送 System Message，是利用模型的**近因效应 (Recency Bias)**，像“强心针”一样重新激活模型对核心规则的记忆。
+
+2.  **动态引导与状态切换 (Dynamic Steering)**：
+    Agent 往往需要经历不同的思考阶段。
+    *   *阶段一*：插入 System Message "你是一个极度发散的创意风暴专家"。
+    *   *阶段二*：插入 System Message "你是一个严谨的逻辑审核员，请批判之前的想法"。
+    这种做法比单纯在 User Message 中要求切换更有效，因为它利用了 System Role 的训练特权，实现了更彻底的“人格切换”。
+
+3.  **权重覆盖**：
+    如果后出现的 System Message 与开头的设定冲突，现代模型通常倾向于**遵从最新指令**。这允许开发者在不清除历史记忆的前提下，动态修正或更新 AI 的行为规范。
+
 ## 3. 最佳实践：如何编写强大的 System Message
 
 既然 System Message 实际上在重塑 LLM 的“短期心智”，通过精心设计的 Prompt 就能大幅提升效果。
