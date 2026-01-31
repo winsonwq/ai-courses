@@ -1,3 +1,10 @@
+---
+title: 人工智能框架技术入门指南：从RNN到Transformer
+summary: 面向初学者的AI框架技术入门指南。深入浅出地介绍RNN、LSTM和Transformer三种核心架构，通过生活化类比解释其工作原理，并提供学习路径与实践建议。
+createdAt: 2026-01-31
+updatedAt: 2026-01-31
+---
+
 # 人工智能框架技术入门指南 - 从RNN到Transformer
 
 ## 引言
@@ -316,75 +323,18 @@ Transformer的成功催生了许多变体：
 
 ## 参考资料
 
-### 文章和教程
-
-1. **Understanding Transformer Architecture in Deep Learning**
-   - https://learn.mathnai.com/module/llm/transformer-architecture/
-   - 深入讲解Transformer的历史背景和核心概念
-
-2. **Understanding the Transformer Architecture - A Beginner's Guide**
-   - https://pub.aimind.so/understanding-the-transformer-architecture-a-beginners-guide-51b8709ff0b3
-   - 面向初学者的Transformer入门指南
-
-3. **Recurrent Neural Network Tutorial (RNN) - DataCamp**
-   - https://www.datacamp.com/tutorial/tutorial-for-recurrent-neural-network
-   - RNN基础教程，包含实践案例
-
-4. **In-depth tutorial of RNN and LSTM networks**
-   - https://medium.com/analytics-vidhya/in-depth-tutorial-of-recurrent-neural-network-rnn-and-long-short-term-memory-lstm-networks-3a782712a09f
-   - RNN和LSTM的深度教程
-
-5. **Python Programming Tutorials - RNN and LSTM**
-   - https://pythonprogramming.net/recurrent-neural-network-rnn-lstm-machine-learning-tutorial/
-   - Python实现RNN和LSTM的教程
-
-6. **Attention Mechanism in Transformer Neural Networks**
-   - https://learnopencv.com/attention-mechanism-in-transformer-neural-networks/
-   - 详细解释Transformer中的注意力机制
-
-7. **Transformer Design Guide (Part 2: Modern Architecture)**
-   - https://rohitbandaru.github.io/blog/Transformer-Design-Guide-Pt2/
-   - 现代Transformer架构的设计指南
-
-### GitHub资源
-
-1. **Transformers-for-absolute-dummies**
-   - https://github.com/rimomcosta/Transformers-for-absolute-dummies
-   - 完整的Transformer学习课程
-
-### 视频资源
-
-1. **How Transformer LLMs Work - DeepLearning.AI**
-   - https://learn.deeplearning.ai/courses/how-transformer-llms-work/
-   - DeepLearning.AI提供的Transformer和LLM课程
-
-2. **Crash Course in Recurrent Neural Networks - MachineLearningMastery**
-   - https://machinelearningmastery.com/crash-course-recurrent-neural-networks-deep-learning/
-   - RNN和LSTM的速成课程
-
-### 经典论文
-
-1. **"Attention Is All You Need" (2017)**
-   - Vaswani et al.
-   - Transformer原始论文，必读经典
-
-2. **"Long Short-Term Memory" (1997)**
-   - Hochreiter & Schmidhuber
-   - LSTM的原始论文
-
-### 实践平台
-
-1. **Hugging Face**
-   - https://huggingface.co/
-   - 提供大量预训练模型和工具
-
-2. **Colaboratory (Colab)**
-   - Google提供的免费GPU环境，适合实验
-
-3. **Kaggle**
-   - https://www.kaggle.com/
-   - 数据集和竞赛平台，有丰富的Notebook示例
-
----
-
-**作者声明**：本文旨在帮助初学者理解人工智能框架技术，所引用的资源和示例均为公开可用的学习材料。读者可以根据自己的学习节奏和兴趣选择深入的方向。人工智能是一个快速发展的领域，保持学习的热情和好奇心是最重要的品质。
+- [Understanding Transformer Architecture in Deep Learning](https://learn.mathnai.com/module/llm/transformer-architecture/) - 深入讲解Transformer的历史背景和核心概念
+- [Understanding the Transformer Architecture - A Beginner's Guide](https://pub.aimind.so/understanding-the-transformer-architecture-a-beginners-guide-51b8709ff0b3) - 面向初学者的Transformer入门指南
+- [Recurrent Neural Network Tutorial (RNN) - DataCamp](https://www.datacamp.com/tutorial/tutorial-for-recurrent-neural-network) - RNN基础教程，包含实践案例
+- [In-depth tutorial of RNN and LSTM networks](https://medium.com/analytics-vidhya/in-depth-tutorial-of-recurrent-neural-network-rnn-and-long-short-term-memory-lstm-networks-3a782712a09f) - RNN和LSTM的深度教程
+- [Python Programming Tutorials - RNN and LSTM](https://pythonprogramming.net/recurrent-neural-network-rnn-lstm-machine-learning-tutorial/) - Python实现RNN和LSTM的教程
+- [Attention Mechanism in Transformer Neural Networks](https://learnopencv.com/attention-mechanism-in-transformer-neural-networks/) - 详细解释Transformer中的注意力机制
+- [Transformer Design Guide (Part 2: Modern Architecture)](https://rohitbandaru.github.io/blog/Transformer-Design-Guide-Pt2/) - 现代Transformer架构的设计指南
+- [Transformers-for-absolute-dummies (GitHub)](https://github.com/rimomcosta/Transformers-for-absolute-dummies) - 完整的Transformer学习课程
+- [How Transformer LLMs Work - DeepLearning.AI](https://learn.deeplearning.ai/courses/how-transformer-llms-work/) - DeepLearning.AI提供的Transformer和LLM课程
+- [Crash Course in Recurrent Neural Networks - MachineLearningMastery](https://machinelearningmastery.com/crash-course-recurrent-neural-networks-deep-learning/) - RNN和LSTM的速成课程
+- [Attention Is All You Need (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) - Transformer原始论文，必读经典
+- [Long Short-Term Memory (Hochreiter & Schmidhuber, 1997)](https://www.bioinf.jku.at/publications/older/2604.pdf) - LSTM原始论文
+- [Hugging Face](https://huggingface.co/) - 提供大量预训练模型和工具
+- [Colaboratory (Colab)](https://colab.research.google.com/) - Google提供的免费GPU环境，适合实验
+- [Kaggle](https://www.kaggle.com/) - 数据集和竞赛平台，有丰富的Notebook示例
