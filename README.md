@@ -19,6 +19,7 @@ AI 课程学习笔记与代码。
 | [L09 构建 Agentic AI - 自主代理循环 (Autonomous Agent Loop)](./L09%20%E6%9E%84%E5%BB%BA%20Agentic%20AI%20-%20%E8%87%AA%E4%B8%BB%E4%BB%A3%E7%90%86%E5%BE%AA%E7%8E%AF%20(Autonomous%20Agent%20Loop)) | 基础 Agent 循环：从 `while(true)` 到自主决策 |
 | [L10 构建 Agentic AI - ReAct 模式](./L10%20%E6%9E%84%E5%BB%BA%20Agentic%20AI%20-%20ReAct%20%E6%A8%A1%E5%BC%8F) | 高级 Agent 模式：Thought-Action-Observation 闭环架构 |
 | [L11 构建多 Agents 工作流](./L11%20%E6%9E%84%E5%BB%BA%E5%A4%9A%20Agents%20%E5%B7%A5%E4%BD%9C%E6%B5%81) | 多智能体协作：从全能助理到专家分工工作流 |
+| [L12 多 Agent 架构和分层 Subagent 架构](./L12%20%E5%A4%9A%20Agent%20%E6%9E%B6%E6%9E%84%E5%92%8C%E5%88%86%E5%B1%82%20subagent%20%E6%9E%B6%E6%9E%84) | 分层架构设计：上下文掌控性划分原则、递归委派模型 |
 
 ## 技术深度见解 (Deep Dive Articles)
 
