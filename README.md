@@ -30,3 +30,4 @@ AI 课程学习笔记与代码。
 - [解密 Transformer：大语言模型背后的「思维引擎」](./articles/llm-transformer-basics.md)
 - [深入 Transformer 内核：现代 LLM 的架构演进与优化](./articles/llm-transformer-advanced-optimizations.md)
 - [Zero to Transformer: 开发者低成本上手指南 (No GPU Required)](./articles/guide-learning-transformers-cpu.md)
+- [人工智能框架技术入门指南：从RNN到Transformer](./articles/ai-framework-intro-rnn-transformer.md)
