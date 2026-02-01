@@ -13,7 +13,7 @@ updatedAt: 2026-02-01
 
 本文将剥离复杂的数学公式，帶你从底层逻辑理解这个改变世界的架构。
 
-<img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/709a7623-480d-42df-a428-c8d2bbd5a79f" />
+![](https://github.com/user-attachments/assets/709a7623-480d-42df-a428-c8d2bbd5a79f)
 
 ## 1. 告别「吸管阅读法」：从 RNN 到 Transformer
 
@@ -45,7 +45,7 @@ RNN 的处理方式是**序列化（Sequential）**的。想象一下，你必�
 
 通过这种机制，每个词不再是孤立的符号，而是吸附了上下文信息的「富语义向量」。这就解释了为什么大模型能理解一词多义，能听懂你的言外之意。
 
-<img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/fb26b4fe-06a1-4c28-9299-645608962834" />
+![](https://github.com/user-attachments/assets/fb26b4fe-06a1-4c28-9299-645608962834)
 
 
 ## 3. 那些被忽视的关键组件
@@ -62,7 +62,7 @@ RNN 的处理方式是**序列化（Sequential）**的。想象一下，你必�
 > **如果把模型比作一个巨大的大脑，Tensor (张量) 就是盛放这些神经元参数的容器——它们就像是一个个多维的 Excel 表格（或者魔方），里面填满了密密麻麻的数字。**
 > 当我们说一个模型是 7B 时，意味着这个 AI 的「大脑」里存储并实时运转着 70 亿个这样的数字权重。
 
-<img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/0fa5f8b8-77f5-49f9-b66b-c1e89ec4da0c" />
+![](https://github.com/user-attachments/assets/0fa5f8b8-77f5-49f9-b66b-c1e89ec4da0c)
 
 在这个高维 Embedding 空间里，神奇的事情发生了：数学运算开始代表语义关系。
 比如：`King (向量) - Man (向量) + Woman (向量) ≈ Queen (向量)`。
@@ -89,7 +89,7 @@ Smart 的设计者们想到了一种利用 **正弦 (Sine) 和余弦 (Cosine) �
 
 Transformer 将这些不同频率的波形值「加」（Add）到原来的 Embedding 向量上。这样，每个词不仅有了语义（我是谁），还有了独特的几何位置特征（我在哪）。
 
-<img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/1635f647-246f-4d1c-9e46-84179aee16c1" />
+![](https://github.com/user-attachments/assets/1635f647-246f-4d1c-9e46-84179aee16c1)
 
 **最绝妙的是**，根据三角函数的数学性质，对于任意固定的偏移量 $k$，位置 $t+k$ 的编码可以被位置 $t$ 的编码线性表示。这就意味着，**模型可以轻松学会「相对位置」的概念**。它不需要死记硬背 "第5个词" 是什么，而是能理解 "这个词后面第3个位置是那个词"，这种能力对于理解语法结构（如主谓宾顺序）至关重要。
 
