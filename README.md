@@ -33,3 +33,6 @@ AI 课程学习笔记与代码。
 6. [深度拆解：稀疏性的复兴——全方位解读 LLM MoE 架构](./articles/llm-moe-architecture-deep-dive.md)
 7. [System Message：重塑 LLM「心智」的潜意识指令](./articles/deep-dive-system-messages.md)
 8. [大模型蒸馏技术深度解密：DeepSeek-R1 到底是自研突破还是 '偷师' OpenAI？](./articles/deep-dive-llm-distillation.md)
+9. [规模炼金术解码：LLM Scaling Laws 深度解析](./articles/deep-dive-llm-scaling-laws.md)
+10. [从零开始：如何训练你自己的“平民版”大语言模型 (LLM)](./articles/how-to-train-your-own-small-llm.md)
+11. [强化训练入门：从基础原理到大模型对齐实战](./articles/intro-to-rl-training.md)
