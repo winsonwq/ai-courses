@@ -1,5 +1,5 @@
 ---
-title: 深入 Transformer 内核：现代 LLM 的架构演进与优化
+title: "深入 Transformer 内核：现代 LLM 的架构演进与优化"
 summary: 随着模型规模的爆炸式增长，原始的 Transformer 架构经历了多次关键进化。本文深入探讨 Llama 等现代主流 LLM 所采用的架构优化，包括 RMSNorm、RoPE（旋转位置编码）、SwiGLU 激活函数以及 GQA/MQA 注意力机制。我们将分析这些改进如何提升训练稳定性、推理速度和长上下文处理能力。
 createdAt: 2026-01-30
 updatedAt: 2026-01-30

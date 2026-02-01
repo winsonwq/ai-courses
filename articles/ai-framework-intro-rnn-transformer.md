@@ -1,5 +1,5 @@
 ---
-title: 人工智能框架技术入门指南：从RNN到Transformer
+title: "人工智能框架技术入门指南：从RNN到Transformer"
 summary: 面向初学者的AI框架技术入门指南。深入浅出地介绍RNN、LSTM和Transformer三种核心架构，通过生活化类比解释其工作原理，并提供学习路径与实践建议。
 createdAt: 2026-01-31
 updatedAt: 2026-01-31

@@ -1,5 +1,5 @@
 ---
-title: System Message：重塑 LLM「心智」的潜意识指令
+title: "System Message：重塑 LLM「心智」的潜意识指令"
 summary: 深入解析 System Message (系统消息) 的运行机制。探讨它如何在注意力机制中发挥锚点作用，以及在指令微调阶段获得的特殊地位。本文还提供了 R.F.C 编写框架，帮助开发者更精准地定义和约束 AI 的行为逻辑。
 createdAt: 2026-01-30
 updatedAt: 2026-01-30

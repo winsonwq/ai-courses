@@ -1,5 +1,5 @@
 ---
-title: LLM 的“聚光灯”：彻底搞懂 Attention 机制
+title: "LLM 的“聚光灯”：彻底搞懂 Attention 机制"
 summary: 本文深入浅出地介绍了 Transformer 核心机制 Attention。通过鸡尾酒会与图书检索的比喻，解构了 QKV 向量的物理意义，并详细解析了标准缩放点积公式背后的数学哲学，最后探讨了其在打破长程依赖方面的伟大意义。
 createdAt: 2026-01-30
 updatedAt: 2026-01-30

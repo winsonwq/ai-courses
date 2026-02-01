@@ -1,5 +1,5 @@
 ---
-title: 解密 Transformer：大语言模型背后的「思维引擎」
+title: "解密 Transformer：大语言模型背后的「思维引擎」"
 summary: 本文为 Transformer 架构的零基础入门指南。我们将避开复杂的数学公式，通过生动的比喻解析 RNN 与 Transformer 的核心区别，拆解 Self-Attention（自注意力机制）如何模拟人类的阅读理解过程，并揭示 Embedding 和位置编码在其中的关键作用。
 createdAt: 2026-01-30
 updatedAt: 2026-02-01
