@@ -81,7 +81,7 @@ flowchart LR
 ```bash
 cd "L13 记忆 Subagent 与上下文压缩"
 npm install
-# 配置 .env: DEEPSEEK_API_KEY=...
+# 在项目根目录或本目录下创建 .env，配置: DEEPSEEK_API_KEY=your_api_key_here
 npm run dev
 npm run test   # 自测（不调 LLM，仅测 store / inject / loadMessageDetail）
 ```

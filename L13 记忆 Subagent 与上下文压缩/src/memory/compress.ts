@@ -21,6 +21,11 @@ function getUncompressedMessages(takeCount: number): import('./types').MessageRe
   return uncompressed;
 }
 
+/** 未被任何 active memory 覆盖的消息数量（用于决定是否触发压缩） */
+export function getUncompressedCount(): number {
+  return getUncompressedMessages(Number.MAX_SAFE_INTEGER).length;
+}
+
 /**
  * 生成一条新记忆的 id
  */

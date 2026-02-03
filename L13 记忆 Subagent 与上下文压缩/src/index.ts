@@ -4,13 +4,14 @@ import type { ToolCall } from './tools/types';
 import type { Message } from './llm/types';
 import { addMessage, getMessages } from './memory/store';
 import { buildInjectedMessages } from './memory/inject';
-import { runCompress } from './memory/compress';
+import { runCompress, getUncompressedCount } from './memory/compress';
 import { getCoordinator } from './agents/registry';
 import { runStep } from './llm/client';
 import { createToolHandler } from './tools/executor';
 import { loadMessageDetailSchema, executeLoadMessageDetail } from './tools/load-message-detail';
 
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
+// 与 L11、L12 一致：从项目根目录加载 .env
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const COMPRESS_EVERY_N_MESSAGES = 6;
 const INJECT_MAX_MESSAGES = 30;
@@ -78,9 +79,10 @@ async function main() {
       messages.push(...toolResults);
     }
 
-    const total = getMessages().length;
-    if (total >= COMPRESS_EVERY_N_MESSAGES) {
-      const compressed = await runCompress({ takeCount: 6 });
+    // 仅当「未压缩消息数」达到阈值时才压缩，避免每轮都压 2 条导致频繁压缩
+    const uncompressedCount = getUncompressedCount();
+    if (uncompressedCount >= COMPRESS_EVERY_N_MESSAGES) {
+      const compressed = await runCompress({ takeCount: COMPRESS_EVERY_N_MESSAGES });
       if (compressed) console.log('\n[已压缩一段对话为记忆]');
     }
   }
