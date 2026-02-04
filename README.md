@@ -36,3 +36,4 @@ AI 课程学习笔记与代码。
 9. [规模炼金术解码：LLM Scaling Laws 深度解析](./articles/deep-dive-llm-scaling-laws.md)
 10. [从零开始：如何训练你自己的“平民版”大语言模型 (LLM)](./articles/how-to-train-your-own-small-llm.md)
 11. [强化训练入门：从基础原理到大模型对齐实战](./articles/intro-to-rl-training.md)
+12. [OpenCode Agent 配置指南：从 JSON 到 Markdown 的完整实践](./articles/opencode-agent-configuration-guide.md)
